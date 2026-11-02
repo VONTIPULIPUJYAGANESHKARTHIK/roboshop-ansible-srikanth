@@ -4,7 +4,7 @@
 
   vars:
     redis_host: redis.eventwithcio.store
-    catalouge_host: catalouge.eventwithcio.store
+    catalogue_host: catalogue.eventwithcio.store
 
   tasks:
     - name: disable default nodejs
