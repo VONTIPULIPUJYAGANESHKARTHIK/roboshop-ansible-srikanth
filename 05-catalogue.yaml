@@ -3,7 +3,7 @@
   become: yes
 
   vars:
-    mongodb_host: mongodb.gcart.store
+    mongodb_host: mongodb.eventwithcio.store
 
   tasks:
     - name: disable default nodejs

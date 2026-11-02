@@ -3,8 +3,8 @@
   become: yes
 
   vars:
-    redis_host: redis.gcart.store
-    catalouge_host: catalouge.gcart.store
+    redis_host: redis.eventwithcio.store
+    catalouge_host: catalouge.eventwithcio.store
 
   tasks:
     - name: disable default nodejs
