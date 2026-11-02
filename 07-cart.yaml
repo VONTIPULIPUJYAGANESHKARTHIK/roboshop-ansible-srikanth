@@ -1,6 +1,11 @@
 - name: configure cart server
   hosts: cart
   become: yes
+
+  vars:
+    redis_host: redis.eventwithcio.store
+    catalogue_host: catalogue.eventwithcio.store
+
   tasks:
     - name: disable default nodejs
       command: dnf module disable nodejs -y
@@ -36,6 +41,9 @@
       file:
         path: /app
         state: directory
+        owner: roboshop
+        group: roboshop
+        mode: "0755"
 
     - name: download cart application
       get_url:
@@ -48,14 +56,28 @@
         dest: /app
         remote_src: yes
 
+    - name: set application permissions
+      file:
+        path: /app
+        owner: roboshop
+        group: roboshop
+        recurse: yes
+
     - name: install dependencies
       community.general.npm:
         path: /app
+      become_user: roboshop
+      environment:
+        HOME: /app
+        npm_config_cache: /app/.npm
 
     - name: copy cart service
       template:
         src: cart.service.j2
         dest: /etc/systemd/system/cart.service
+        owner: root
+        group: root
+        mode: "0644"
 
     - name: daemon reload
       systemd_service:
